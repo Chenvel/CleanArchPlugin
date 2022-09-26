@@ -4,7 +4,7 @@ plugins {
 }
 
 group = "ru.pasha"
-version = "1.0-SNAPSHOT"
+version = "1.0.0-beta"
 
 repositories {
     mavenCentral()
@@ -15,8 +15,6 @@ repositories {
 intellij {
     version.set("2021.3")
     type.set("PC") // Target IDE Platform
-
-    plugins.set(listOf("PythonCore"))
 }
 
 tasks {
