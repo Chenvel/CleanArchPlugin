@@ -6,7 +6,7 @@ version - 1.1 beta
 
 <h3>How to open GUI</h3>
 1. Wait until your IDE will ready for working
-2. Press hot keys **Alt + C** and then **Alt + A**
+2. Press hot keys <b>Alt + C</b> and then <b>Alt + A</b>
 3. Plugin's GUI will open, and you will see your project's Main Sequence
 
 <h3>How to use plugin</h3>
@@ -23,7 +23,7 @@ version - 1.1 beta
 
 1. Download any .jar file (/jar/PycharmPlugin-....jar)
 2. Open your IDE PyCharm
-3. Go to settings (Ctrl + Alt + S (Windows/Linux), ⌘ (MacOS))
+3. Go to settings (<b>Ctrl + Alt + S</b> (Windows/Linux), <b>⌘</b> (MacOS))
 4. Open plugin menu
 5. Click to the settings icon after "Installed" tab
 6. Choose "Install plugin from disk..."
@@ -35,7 +35,7 @@ Congratulation! You downloaded my plugin
 <h2>Versions info</h2>
 1. <h4>PycharmPlugin-1.0.0-beta.jar</h4>
     - The first version of plugin
-    - The first version of GUI (**Ctrl + Alt + \\** then **Ctrl + Alt + /** to invoke)
+    - The first version of GUI (<b>Ctrl + Alt + \</b> then <b>Ctrl + Alt + /</b> to invoke)
     - GUI is not adaptive
     - Not shows I and A of opened file when file opening in the editor
     - Have enough bugs
@@ -43,6 +43,6 @@ Congratulation! You downloaded my plugin
    - Some bugs from first version fixed
    - Still bad GUI
 3. <h4>PycharmPlugin-1.1-beta</h4>
-    - The second version of GUI (**Alt + C** then **Alt + A** to invoke)
+    - The second version of GUI (<b>Alt + C</b> then <b>Alt + A</b> to invoke)
     - GUI became adaptive
     - Shows I and A of opened file when file opening in the editor in notifications
