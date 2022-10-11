@@ -31,3 +31,18 @@ version - 1.1 beta
 8. Press accept
 
 Congratulation! You downloaded my plugin
+
+<h2>Versions info</h2>
+1. <h4>PycharmPlugin-1.0.0-beta.jar</h4>
+    - The first version of plugin
+    - The first version of GUI (**Ctrl + Alt + \\** then **Ctrl + Alt + /** to invoke)
+    - GUI is not adaptive
+    - Not shows I and A of opened file when file opening in the editor
+    - Have enough bugs
+2. <h4>PycharmPlugin-1.0.1-beta</h4>
+   - Some bugs from first version fixed
+   - Still bad GUI
+3. <h4>PycharmPlugin-1.1-beta</h4>
+    - The second version of GUI (**Alt + C** then **Alt + A** to invoke)
+    - GUI became adaptive
+    - Shows I and A of opened file when file opening in the editor in notifications
