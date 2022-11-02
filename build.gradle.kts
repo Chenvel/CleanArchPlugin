@@ -1,11 +1,10 @@
 plugins {
     id("java")
     id("org.jetbrains.intellij") version "1.6.0"
-    id("org.openjfx.javafxplugin") version "0.0.13"
 }
 
 group = "ru.pasha"
-version = "1.1-beta"
+version = "1.2-beta"
 
 repositories {
     mavenCentral()
@@ -16,10 +15,6 @@ repositories {
 intellij {
     version.set("2021.3")
     type.set("PC") // Target IDE Platform
-}
-
-javafx {
-    modules("javafx.controls")
 }
 
 tasks {

@@ -26,12 +26,13 @@
          Read more: https://plugins.jetbrains.com/docs/intellij/plugin-extension-points.html -->
     <extensions defaultExtensionNs="com.intellij">
         <postStartupActivity implementation="ru.pasha.pycharmplugin.Start"/>
-
+        <toolWindow factoryClass="ru.pasha.pycharmplugin.CleanArchToolWindowFactory" id="CleanArch" anchor="right"/>
     </extensions>
     <actions>
         <action id="ru.pasha.pycharmplugin.InvokePluginAction" class="ru.pasha.pycharmplugin.InvokePluginAction"
-                text="Invoke Clean Arch Analyzer" description="Invoking GUI with Main Sequence">
-            <keyboard-shortcut keymap="$default" first-keystroke="alt C" second-keystroke="alt A"/>
+                text="CleanArchGuiInvoker" description="Invokes CleanArch GUI">
+            <keyboard-shortcut keymap="$default" first-keystroke="ctrl alt BACK_SLASH"
+                               second-keystroke="ctrl alt SLASH"/>
         </action>
     </actions>
 </idea-plugin>
