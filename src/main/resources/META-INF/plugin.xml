@@ -28,11 +28,4 @@
         <postStartupActivity implementation="ru.pasha.pycharmplugin.Start"/>
         <toolWindow factoryClass="ru.pasha.pycharmplugin.CleanArchToolWindowFactory" id="CleanArch" anchor="right"/>
     </extensions>
-    <actions>
-        <action id="ru.pasha.pycharmplugin.InvokePluginAction" class="ru.pasha.pycharmplugin.InvokePluginAction"
-                text="CleanArchGuiInvoker" description="Invokes CleanArch GUI">
-            <keyboard-shortcut keymap="$default" first-keystroke="ctrl alt BACK_SLASH"
-                               second-keystroke="ctrl alt SLASH"/>
-        </action>
-    </actions>
 </idea-plugin>

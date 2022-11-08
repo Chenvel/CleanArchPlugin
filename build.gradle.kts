@@ -4,7 +4,7 @@ plugins {
 }
 
 group = "ru.pasha"
-version = "1.2-beta"
+version = "1.0.0-RELEASE"
 
 repositories {
     mavenCentral()

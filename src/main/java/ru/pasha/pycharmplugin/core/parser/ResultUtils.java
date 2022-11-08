@@ -1,4 +1,4 @@
-package ru.pasha.pycharmplugin.parser;
+package ru.pasha.pycharmplugin.core.parser;
 
 import com.intellij.lang.ASTNode;
 import com.intellij.openapi.editor.Editor;
@@ -51,6 +51,7 @@ public class ResultUtils {
         float A = result.get(0).getCord().values().stream().findFirst().get();
 
         Notifier.infoNotification(String.format("(I = %.2f, A = %.2f)\n", I, A));
+
     }
 
     public void parseIAndA(Project project, VirtualFile rootDir) {
@@ -73,6 +74,5 @@ public class ResultUtils {
         ProjectInfoStorage.getPythonFiles().forEach((file, info) -> results.add(calculator.calculate(file, info)));
 
         ProjectInfoStorage.setResults(results);
-        System.out.println(ProjectInfoStorage.getResults());
     }
 }

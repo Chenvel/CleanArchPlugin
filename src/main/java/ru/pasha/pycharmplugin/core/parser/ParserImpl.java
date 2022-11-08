@@ -1,4 +1,4 @@
-package ru.pasha.pycharmplugin.parser;
+package ru.pasha.pycharmplugin.core.parser;
 
 import com.intellij.lang.ASTNode;
 import com.intellij.openapi.project.Project;

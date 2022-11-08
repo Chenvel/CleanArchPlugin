@@ -1,8 +1,7 @@
-package ru.pasha.pycharmplugin.parser;
+package ru.pasha.pycharmplugin.core.parser;
 
 import com.intellij.lang.ASTNode;
 import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.psi.tree.IElementType;
 import ru.pasha.pycharmplugin.storage.ProjectInfoStorage;
 
 import static ru.pasha.pycharmplugin.storage.ProjectInfoStorage.getAlreadyScanned;
@@ -12,22 +11,23 @@ public class ParseUtils {
 
     private final static ResultUtils resultUtil = new ResultUtils();
     private final static String FROM_IMPORT_STATEMENT = "FROM_IMPORT_STATEMENT";
-    private final static IElementType REFERENCE_EXPRESSION = IElementType.find((short) 597);
-    private final static IElementType IMPORT_ELEMENT = IElementType.find((short) 564);
 
-    public void packageParser(ASTNode childNode, VirtualFile file) {
+    public void packageParser(ASTNode childNode, VirtualFile openedFile) {
         String packageName = childNode.getFirstChildNode().getTreeNext().getTreeNext().getText();
-                //findChildByType(REFERENCE_EXPRESSION).getText()
 
         int i = packageName.lastIndexOf('.');
         String name = packageName.substring(i + 1);
 
         if (!getAlreadyScanned().contains(name)) {
             if (getPythonFileNames().contains(name)) {
-                resultUtil.updateDirectoryOrFileInfo(name, file);
+                resultUtil.updateDirectoryOrFileInfo(name, openedFile);
                 ProjectInfoStorage.addAlreadyScanned(name);
+                String fileName = name.substring(name.lastIndexOf('.') + 1);
+                if (ProjectInfoStorage.getPythonFileNames().contains(fileName) && !openedFile.getNameWithoutExtension().equals(fileName)) {
+                    ProjectInfoStorage.addDependedFile(openedFile.getNameWithoutExtension(), name);
+                }
             } else {
-                fileParser(childNode, file);
+                fileParser(childNode, openedFile);
             }
         }
     }
@@ -35,10 +35,9 @@ public class ParseUtils {
     public void abstractClassParser(ASTNode childNode, VirtualFile file) {
         ProjectInfoStorage.getPythonFiles().get(file).increaseClasses();
         ASTNode blockWithArguments = childNode.getFirstChildNode().getTreeNext().getTreeNext().getTreeNext();
-        //findChildByType(CLASS_ARGUMENT_LIST_TYPE)
+
         if (blockWithArguments.getFirstChildNode() == null) return;
         ASTNode arguments = blockWithArguments.getFirstChildNode().getTreeNext();
-        //findChildByType(REFERENCE_EXPRESSION)
 
         if (arguments != null) {
             arguments = arguments.getFirstChildNode();
@@ -47,24 +46,36 @@ public class ParseUtils {
         }
     }
 
-    public void fileParser(ASTNode childNode, VirtualFile file) {
+    public void fileParser(ASTNode childNode, VirtualFile openedFile) {
         ASTNode importPackage = childNode.getFirstChildNode().getTreeNext().getTreeNext();
-        // .findChildByType(IMPORT_ELEMENT)
 
         if (childNode.getElementType().getDebugName().equals(FROM_IMPORT_STATEMENT)) {
             String name = importPackage.getText();
 
-            resultUtil.updateDirectoryOrFileInfo(name, file);
+            if (name.equals(".")) {
+                name = importPackage.getTreeNext().getText();
+            }
+
+            String fileName = name.substring(name.lastIndexOf('.') + 1);
+
+            resultUtil.updateDirectoryOrFileInfo(name, openedFile);
             ProjectInfoStorage.addAlreadyScanned(name);
+            if (ProjectInfoStorage.getPythonFileNames().contains(fileName) && !openedFile.getNameWithoutExtension().equals(fileName)) {
+                ProjectInfoStorage.addDependedFile(openedFile.getNameWithoutExtension(), name);
+            }
         } else {
             String packageName = importPackage.getFirstChildNode().getText();
             int i = packageName.indexOf('.');
 
             String name = packageName.substring(i + 1);
+            String fileName = name.substring(name.lastIndexOf('.') + 1);
 
             if (!getAlreadyScanned().contains(name)) {
-                resultUtil.updateDirectoryOrFileInfo(name, file);
+                resultUtil.updateDirectoryOrFileInfo(name, openedFile);
                 ProjectInfoStorage.addAlreadyScanned(name);
+                if (ProjectInfoStorage.getPythonFileNames().contains(fileName) && !openedFile.getNameWithoutExtension().equals(fileName)) {
+                    ProjectInfoStorage.addDependedFile(openedFile.getNameWithoutExtension(), name);
+                }
             }
         }
     }

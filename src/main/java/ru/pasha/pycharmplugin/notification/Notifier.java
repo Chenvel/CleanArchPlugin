@@ -7,11 +7,13 @@ import ru.pasha.pycharmplugin.storage.ProjectInfoStorage;
 public class Notifier {
 
     public static void infoNotification(String content){
-        new Notification(
+        Notification n = new Notification(
                 "ru.pasha.pycharmplugin",
                 "CleanArch plugin info",
                 content,
                 NotificationType.INFORMATION
-        ).notify(ProjectInfoStorage.getProject());
+        );
+        n.notify(ProjectInfoStorage.getProject());
+        n.hideBalloon();
     }
 }

@@ -1,1 +1,1 @@
-rootProject.name = "PycharmPlugin"
+rootProject.name = "CleanArch"

@@ -10,10 +10,10 @@ import com.intellij.openapi.roots.ProjectFileIndex;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.openapi.vfs.VirtualFileManager;
 import org.jetbrains.annotations.NotNull;
+import ru.pasha.pycharmplugin.core.parser.ResultUtils;
 import ru.pasha.pycharmplugin.gui.custom_components.PartButtonDirections;
 import ru.pasha.pycharmplugin.gui.custom_components.PartRoundedButton;
 import ru.pasha.pycharmplugin.gui.custom_components.RoundedButton;
-import ru.pasha.pycharmplugin.parser.ResultUtils;
 import ru.pasha.pycharmplugin.storage.ProjectInfoStorage;
 
 import javax.swing.*;
@@ -35,6 +35,7 @@ public class Gui {
     private JPanel buttonPanel;
     private JPanel reloadPanel;
     private JPanel contextMenu;
+    private JFrame cm;
     private JButton reloadButton;
     private JPanel mainPanel;
     private JPanel mainSequencePanel;
@@ -42,7 +43,7 @@ public class Gui {
     private JButton zoneOfPain;
     private JButton zoneOfUseless;
     private final List<JButton> points = new ArrayList<>();
-    ResultUtils resultUtils = new ResultUtils();
+    private final static ResultUtils resultUtils = new ResultUtils();
 
     public Gui() {
         createUIComponents();
@@ -63,14 +64,16 @@ public class Gui {
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
                 reloadButton.setBackground(new Color(80, 83, 85));
+                ProjectInfoStorage.clear();
+                Project project = ProjectInfoStorage.getProject();
+                resultUtils.parseIAndA(project, ProjectFileIndex.getInstance(project).getContentRootForFile(project.getProjectFile()));
+                repaintPoints();
             }
 
             @Override
             public void mousePressed(MouseEvent e) {
                 super.mousePressed(e);
                 reloadButton.setBackground(new Color(100, 103, 105));
-                points.forEach(mainSequence::remove);
-                createPoints();
             }
         });
 
@@ -86,13 +89,17 @@ public class Gui {
                     ProjectInfoStorage.setOpenedFile(FileDocumentManager.getInstance().getFile(textEditor.getDocument()));
                 }
 
+
                 if (event.getNewFile().getExtension().equals("py")) {
                     ProjectInfoStorage.clear();
                     resultUtils.parseIAndA(project, ProjectFileIndex.getInstance(project).getContentRootForFile(project.getProjectFile()));
                     resultUtils.showNotification(event.getNewFile());
                 }
 
-                repaintPoints();
+                // No matter zoneOfPane or zoneOfUseless is null
+                if (zoneOfPain != null) {
+                    repaintPoints();
+                }
             } else {
                 ProjectInfoStorage.setOpenedFile(null);
             }
@@ -160,7 +167,6 @@ public class Gui {
                     @Override
                     public void mouseClicked(MouseEvent e) {
                         super.mouseClicked(e);
-                        FileEditorManager.getInstance(ProjectInfoStorage.getProject()).openFile(result.getFile(), true);
                     }
 
                     @Override
@@ -178,6 +184,9 @@ public class Gui {
                         mainSequence.add(menu);
                         if (e.isPopupTrigger()) {
                             menu.show(contextMenu, pointX + 5, pointY + 5);
+                        } else {
+                            FileEditorManager.getInstance(ProjectInfoStorage.getProject()).openFile(result.getFile(), true);
+                            menu.remove(contextMenu);
                         }
                     }
 
@@ -230,7 +239,6 @@ public class Gui {
                 public void mouseClicked(MouseEvent e) {
                     super.mouseClicked(e);
                     btn.setBackground(new Color(80, 83, 85));
-                    System.out.println("click");
                 }
 
                 @Override
